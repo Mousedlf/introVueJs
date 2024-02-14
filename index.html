@@ -33,7 +33,7 @@
     <p><input type="text" v-model="greeting"></p>
     <p>{{ greeting }} ({{greeting.length }})</p>
 
-    <button :class="buttonClasses" v-on:click="toggle" class="btn">Click Here</button>
+    <button :class="active ? 'btn-danger' : 'btn-success'" @click="toggle" class="btn">Click Here</button>
 
     </div>
 
@@ -42,13 +42,15 @@
         data(){
             return {
                 greeting: 'Hello World',
-                buttonClasses:"btn-success"
+                buttonClasses:"btn-success",
+                active: false,
             }
         },
 
         methods: {
             toggle(){
-                alert('hello');
+                /* this.buttonClasses = "btn-danger"; */
+                this.active = !this.active;
             }
         },
 
