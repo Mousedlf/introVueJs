@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <style>
+
+        .btn{
+            padding: 10px 30px;
+
+        }
+
+        .btn-danger{
+            background-color: red;
+        }
+
+        .btn-success{
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="app">
+
+    <p><input type="text" v-model="greeting"></p>
+    <p>{{ greeting }} ({{greeting.length }})</p>
+
+    <button :class="active ? 'btn-danger' : 'btn-success'" @click="toggle" class="btn">Click Here</button>
+
+    <div v-show="missingThings.length">
+        <h2>non</h2>
+        <ul>
+            <li v-for="thing in missingThings"
+                :key="thing.id"
+            >
+                <label>{{thing.name }}
+                    <input type="checkbox" v-model="thing.bought">
+
+                </label>
+            </li>
+        </ul>
+    </div>
+
+    <div v-show="boughtThings.length">
+        <h2>oui</h2>
+        <ul>
+            <li v-for="thing in boughtThings"
+                :key="thing.id"
+            >
+                <label>{{thing.name }}
+                    <input type="checkbox" v-model="thing.bought">
+
+                </label>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <!-- <pre>{{things}}</pre><-->
+
+</div>
+
+
+<script>
+    let app = {
+
+        data(){
+            return {
+                greeting: 'Hello World',
+                buttonClasses:"btn-success",
+                active: false,
+                things : [
+                    { name: 'biscottes', bought: false},
+                    { name: 'chou blanc', bought: false},
+                    { name: 'lait x2', bought: false},
+                ]
+            }
+        },
+
+        methods: {
+            toggle(){
+                /* this.buttonClasses = "btn-danger"; */
+                this.active = !this.active;
+            }
+        },
+
+        computed:{
+            missingThings(){
+                return this.things.filter(thing => ! thing.bought);
+            },
+            boughtThings(){
+                return this.things.filter(thing => thing.bought);
+            }
+        },
+
+        mounted(){
+            setTimeout( ()=>{
+                this.greeting = "Noot noot";}, 2000);
+        }
+
+    }
+
+    Vue.createApp(app).mount('#app');
+</script>
+
+</body>
+</html>
