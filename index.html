@@ -35,15 +35,54 @@
 
     <button :class="active ? 'btn-danger' : 'btn-success'" @click="toggle" class="btn">Click Here</button>
 
+    <div v-show="missingThings.length">
+        <h2>non</h2>
+        <ul>
+            <li v-for="thing in missingThings"
+                :key="thing.id"
+            >
+                <label>{{thing.name }}
+                    <input type="checkbox" v-model="thing.bought">
+
+                </label>
+            </li>
+        </ul>
     </div>
 
+    <div v-show="boughtThings.length">
+        <h2>oui</h2>
+        <ul>
+            <li v-for="thing in boughtThings"
+                :key="thing.id"
+            >
+                <label>{{thing.name }}
+                    <input type="checkbox" v-model="thing.bought">
+
+                </label>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <!-- <pre>{{things}}</pre><-->
+
+</div>
+
+
 <script>
-    Vue.createApp({
+    let app = {
+
         data(){
             return {
                 greeting: 'Hello World',
                 buttonClasses:"btn-success",
                 active: false,
+                things : [
+                    { name: 'biscottes', bought: false},
+                    { name: 'chou blanc', bought: false},
+                    { name: 'lait x2', bought: false},
+                ]
             }
         },
 
@@ -54,12 +93,23 @@
             }
         },
 
+        computed:{
+            missingThings(){
+                return this.things.filter(thing => ! thing.bought);
+            },
+            boughtThings(){
+                return this.things.filter(thing => thing.bought);
+            }
+        },
+
         mounted(){
             setTimeout( ()=>{
                 this.greeting = "Noot noot";}, 2000);
         }
 
-    }).mount('#app');
+    }
+
+    Vue.createApp(app).mount('#app');
 </script>
 
 </body>
